@@ -1,0 +1,14 @@
+from flask import Flask, render_template
+import os
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+if __name__ == '__main__':
+    from waitress import serve
+    PORT = int(os.environ.get('PORT', 8000))
+    HOST = '0.0.0.0'
+    serve(app, host=HOST, port=PORT)
