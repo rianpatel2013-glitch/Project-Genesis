@@ -6,11 +6,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Genesis</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
     <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
 </head>
 
 <body>
-    
+
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- ============================================================
+         MISSION NAV
+         Two tiers: a thin live-status ticker (mirrors the hero's
+         status readout so the "live mission" identity carries across
+         every page), and the primary link row below it.
+
+         `request.endpoint` drives the active state — rename the
+         endpoints below (home, encyclopedia, crew, technology,
+         flight_log, astro_ai, learning) to match your actual
+         Flask view function names.
+    ============================================================= -->
+    <header class="mission-nav" id="missionNav">
+
+        <div class="mission-nav__ticker" aria-hidden="true">
+            <span class="ticker-dot"></span>
+            <span class="ticker-text" id="missionClock">T+ 000:00:00:00</span>
+            <span class="ticker-sep">&middot;</span>
+            <span class="ticker-text">SIGNAL NOMINAL</span>
+        </div>
+
+        <div class="mission-nav__row">
+
+            {# href="{{ safe_url_for('home') }}" — restore once routes exist #}
+            <a href="#" class="mission-nav__brand" aria-label="Project Genesis, home">
+                <svg class="brand-mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true">
+                    <circle cx="16" cy="16" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"></circle>
+                    <g class="brand-mark__orbit">
+                        <circle cx="16" cy="4" r="2" fill="currentColor"></circle>
+                    </g>
+                </svg>
+                <span class="brand-word">Genesis</span>
+            </a>
+
+            <button type="button" class="mission-nav__toggle" id="navToggle"
+                aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="mission-nav__links" id="navLinks" aria-label="Primary">
+                <ul>
+                    <li>
+                        {# href="{{ safe_url_for('home') }}" #}
+                        <a href="#"
+                           class="{{ 'is-active' if request.endpoint == 'home' else '' }}"
+                           {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
+                            <span class="link-code">MC</span>
+                            <span class="link-label">Mission Command</span>
+                        </a>
+                    </li>
+                    <li>
+                        {# href="{{ safe_url_for('encyclopedia') }}" #}
+                        <a href="#"
+                           class="{{ 'is-active' if request.endpoint == 'encyclopedia' else '' }}"
+                           {% if request.endpoint == 'encyclopedia' %}aria-current="page"{% endif %}>
+                            <span class="link-code">CE</span>
+                            <span class="link-label">Cosmic Encyclopedia</span>
+                        </a>
+                    </li>
+                    <li>
+                        {# href="{{ safe_url_for('crew') }}" #}
+                        <a href="#"
+                           class="{{ 'is-active' if request.endpoint == 'crew' else '' }}"
+                           {% if request.endpoint == 'crew' %}aria-current="page"{% endif %}>
+                            <span class="link-code">CR</span>
+                            <span class="link-label">Crew</span>
+                        </a>
+                    </li>
+                    <li>
+                        {# href="{{ safe_url_for('technology') }}" #}
+                        <a href="#"
+                           class="{{ 'is-active' if request.endpoint == 'technology' else '' }}"
+                           {% if request.endpoint == 'technology' %}aria-current="page"{% endif %}>
+                            <span class="link-code">TC</span>
+                            <span class="link-label">Technology</span>
+                        </a>
+                    </li>
+                    <li>
+                        {# href="{{ safe_url_for('flight_log') }}" #}
+                        <a href="#"
+                           class="{{ 'is-active' if request.endpoint == 'flight_log' else '' }}"
+                           {% if request.endpoint == 'flight_log' %}aria-current="page"{% endif %}>
+                            <span class="link-code">FL</span>
+                            <span class="link-label">Flight Log</span>
+                        </a>
+                    </li>
+                    <li>
+                        {# href="{{ safe_url_for('astro_ai') }}" #}
+                        <a href="#"
+                           class="is-live {{ 'is-active' if request.endpoint == 'astro_ai' else '' }}"
+                           {% if request.endpoint == 'astro_ai' %}aria-current="page"{% endif %}>
+                            <span class="link-code">AI</span>
+                            <span class="link-label">Astro-AI Assistant</span>
+                            <span class="live-dot" aria-hidden="true"></span>
+                        </a>
+                    </li>
+                    <li>
+                        {# href="{{ safe_url_for('interactive_learning') }}" #}
+                        <a href="#"
+                           class="{{ 'is-active' if request.endpoint == 'interactive_learning' else '' }}"
+                           {% if request.endpoint == 'interactive_learning' %}aria-current="page"{% endif %}>
+                            <span class="link-code">IL</span>
+                            <span class="link-label">Interactive Learning</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Page content goes here -->
+    </main>
+
 </body>
 </html>

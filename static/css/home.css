@@ -1,0 +1,280 @@
+/* =========================================================
+   PROJECT GENESIS — design tokens
+   ========================================================= */
+:root {
+    --void-950: #05070b;
+    --panel-900: #0d1220;
+    --panel-800: #131a2b;
+    --line-800: #1c2438;
+
+    --ink-100: #eaf0f6;
+    --ink-400: #93a1b4;
+    --ink-600: #5c6b80;
+
+    --signal-500: #ff5a36;
+    --telemetry-400: #38d9c4;
+
+    --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    --nav-row-h: 64px;
+    --nav-ticker-h: 28px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--void-950);
+    color: var(--ink-100);
+    font-family: var(--font-display);
+}
+
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 200;
+    background: var(--signal-500);
+    color: var(--void-950);
+    padding: 0.6rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}
+.skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+}
+
+/* =========================================================
+   MISSION NAV — outer shell
+   ========================================================= */
+.mission-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13, 18, 32, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-800);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.mission-nav::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--signal-500) 45%, var(--telemetry-400) 55%, transparent);
+    opacity: 0.35;
+    pointer-events: none;
+}
+.mission-nav.is-scrolled {
+    background: rgba(9, 12, 22, 0.96);
+    border-color: var(--panel-800);
+}
+
+/* ---- live status ticker ------------------------------- */
+.mission-nav__ticker {
+    height: var(--nav-ticker-h);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-400);
+    border-bottom: 1px solid var(--panel-800);
+}
+.ticker-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--telemetry-400);
+    box-shadow: 0 0 0 3px rgba(56, 217, 196, 0.15);
+    animation: pulse 2.4s ease-in-out infinite;
+}
+.ticker-sep { color: var(--panel-800); }
+
+/* ---- primary row ---------------------------------------- */
+.mission-nav__row {
+    height: var(--nav-row-h);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.mission-nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--ink-100);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.brand-mark { color: var(--signal-500); }
+.brand-mark__orbit {
+    transform-origin: 16px 16px;
+    animation: orbit 6s linear infinite;
+}
+.brand-word {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+/* ---- link list ------------------------------------------- */
+.mission-nav__links {
+    margin-left: auto;
+}
+.mission-nav__links ul {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.mission-nav__links a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.65rem;
+    color: var(--ink-400);
+    text-decoration: none;
+    font-size: 0.88rem;
+    border-radius: 3px;
+    transition: color 0.15s ease;
+}
+.mission-nav__links a::after {
+    content: "";
+    position: absolute;
+    left: 0.65rem;
+    right: 0.65rem;
+    bottom: 0.15rem;
+    height: 1px;
+    background: var(--signal-500);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+}
+.mission-nav__links a:hover,
+.mission-nav__links a:focus-visible {
+    color: var(--ink-100);
+}
+.mission-nav__links a:hover::after,
+.mission-nav__links a:focus-visible::after,
+.mission-nav__links a.is-active::after {
+    transform: scaleX(1);
+}
+.mission-nav__links a.is-active {
+    color: var(--ink-100);
+}
+.mission-nav__links a.is-active .link-code {
+    color: var(--signal-500);
+}
+
+.link-code {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-600);
+    letter-spacing: 0.02em;
+}
+
+.mission-nav__links a.is-live::after { background: var(--telemetry-400); }
+.mission-nav__links a.is-live.is-active .link-code { color: var(--telemetry-400); }
+.live-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--telemetry-400);
+    animation: pulse 1.8s ease-in-out infinite;
+}
+
+/* ---- mobile toggle ---------------------------------------- */
+.mission-nav__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.mission-nav__toggle span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: var(--ink-100);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.mission-nav__toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+}
+.mission-nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.mission-nav__toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+@keyframes orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .brand-mark__orbit,
+    .ticker-dot,
+    .live-dot { animation: none; }
+}
+
+/* =========================================================
+   RESPONSIVE — collapse under 960px
+   ========================================================= */
+@media (max-width: 960px) {
+    .mission-nav__toggle { display: flex; }
+
+    .mission-nav__links {
+        position: absolute;
+        top: calc(var(--nav-row-h) + var(--nav-ticker-h));
+        left: 0;
+        right: 0;
+        background: var(--panel-900);
+        border-bottom: 1px solid var(--line-800);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+    }
+    .mission-nav__links.is-open { max-height: 480px; }
+
+    .mission-nav__links ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0.5rem 1rem 1rem;
+    }
+    .mission-nav__links a {
+        padding: 0.85rem 0.5rem;
+        border-bottom: 1px solid var(--panel-800);
+    }
+    .mission-nav__links a::after { display: none; }
+}
+
+@media (max-width: 480px) {
+    .mission-nav__ticker .ticker-text:last-child,
+    .mission-nav__ticker .ticker-sep { display: none; }
+}
